@@ -1,16 +1,23 @@
 module.exports = function getZerosCount(number, base) {
     let zeroCount = 0;
-      while (number) {
-        for (var base = 2; base <= 255; base++) {
+   
+    for (var base = 2; base <= 255; curr++) {
 
-          for (var j = 2; j < i; j++) {
-            if (base % j == 0) continue nextPrime;
-          }
-        
+      for (var curr = 2; curr < i; curr++) {
+        if (i % curr == 0) continue nextPrime;
       
-          alert( base ); // простое
-        }
-        number = (number / base)+(number / base^2)+(number / base^3)+(number / base^4)+(number / base^5)+(number / base^6)+(number / 2^7)+(number / base^8) | 0;
+        num /= curr;
+        dividersNum[curr]++;
+      }
+  
+        if (dividersNum[curr] !== 0){
+           dividers.push(curr);
+      }
+curr++
+    }
+
+    while (number) {
+        number = (number / dividers)+(number / dividers^2)+(number / dividers^3)+(number / dividers^4)+(number / dividers^5)+(number / dividers^6)+(number / dividers^7)+(number / dividers^8) | 0;
           zeroCount += number;
     }
     return zeroCount;
