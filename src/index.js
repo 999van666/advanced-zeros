@@ -1,24 +1,60 @@
 module.exports = function getZerosCount(number, base) {
-    let zeroCount = 0;
-      var result = []
-      
-      var d = 2;
+  function isSimple(n) {
 
-      while (base > 1) {
-        if (base % d === 0) {
-          base /= d;
-          result.push(d);
-          d = 2;
-        } else {
-          d++;
+    for (let i = n; ;) {
+      for (let j = 2; j < i; j++) {
+        if (i % j === 0) {
+          return false;
+        }
+      }
+      return true;
+    } 
+
+  }
+
+  function getSimpleArr(base) {
+    const simpleArr = [];
+    
+    for (let i = 2, j = 0; i <= base; i++, j++) {
+      
+      if (isSimple(i) && base % i === 0) {
+        simpleArr.push({n: [], powt: 0});
+  
+        while (base % i === 0) {
+          base /= i;
+          simpleArr[j].n[0] = i;
+          simpleArr[j].powt++;
+        }
+      } else {
+        j--;
+      }
+    }
+
+    return simpleArr;
+  }
+
+  function getSumArr(number, simpleArr) {  
+    const sumArr = [];
+  
+    for (var j = 0; j < simpleArr.length; j++) {
+      let sum = 0;
+
+        for (let i = 1; i <= number; i++) {
+          let int = Math.floor(number / Math.pow(simpleArr[j].n[0], i));
+
+          if (int >= 1) {
+            sum += int;
+          } else {
+            break;
+          }
         }
       
-      return result;
-    } 
-    while (number) {
-        number = (number / Math.pow(d, result));
-          zeroCount += number;
+      sumArr.push(Math.floor(sum / simpleArr[j].powt));
     }
-    return zeroCount;
   
+    return Math.min(...sumArr);
   }
+
+  return getSumArr(number, getSimpleArr(base));
+
+}
